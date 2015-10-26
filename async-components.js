@@ -1,4 +1,6 @@
 const COMPONENT_ATTR = 'data-component';
+const DETAIL_ATTR = 'data-detail';
+const EVENT_ATTR = 'data-event';
 
 const OBSERVER_CONFIG = {
   attributes: true,
@@ -13,8 +15,8 @@ function getText(response) {
 }
 
 function parse(params) {
-  var detail = params.node.getAttribute("data-detail");
-  params.eventName = params.node.getAttribute("data-event");
+  var detail = params.node.getAttribute(DETAIL_ATTR);
+  params.eventName = params.node.getAttribute(EVENT_ATTR);
   try {
     params.eventDetail = JSON.parse(detail);
   } catch (e) {
