@@ -1,5 +1,5 @@
 # async-components
 
 ```html
-<div data-component="/foo/data.json" data-event="foo-loaded"></div>
+<div data-component="/foobar.html" data-event="foobar-loaded"></div>
 ```
