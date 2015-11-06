@@ -10,7 +10,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "es5": "./node_modules/.bin/babel --presets es2015 async-components.js -o dist/async-components.es5.js",
+    "es5": "./node_modules/.bin/babel --presets es2015 async-components.js -o dist/async-components.es5.js -s",
     "uglify": "./node_modules/.bin/uglifyjs dist/async-components.es5.js --mangle -o dist/async-components.es5.min.js",
     "build": "npm run es5 && npm run uglify"
   },

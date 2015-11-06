@@ -62,7 +62,7 @@
     var url = node.getAttribute(COMPONENT_ATTR);
     var getNodeData = getData(node);
 
-    fetch(url).then(getText).then(getNodeData).then(placeElement).then(dispatchEvent).catch(reportError);
+    fetch(url).then(getText).then(getNodeData).then(placeElement).then(dispatchEvent)['catch'](reportError);
   }
 
   function filterComponents(node) {
@@ -79,3 +79,5 @@
 
   observer.observe(document.body, OBSERVER_CONFIG);
 })(document);
+
+//# sourceMappingURL=async-components.es5.js.map
