@@ -1,10 +1,12 @@
-((document) => {
+'use strict';
 
-  const COMPONENT_ATTR = 'data-component';
-  const DETAIL_ATTR = 'data-detail';
-  const EVENT_ATTR = 'data-event';
+(function (document) {
 
-  const OBSERVER_CONFIG = {
+  var COMPONENT_ATTR = 'data-component';
+  var DETAIL_ATTR = 'data-detail';
+  var EVENT_ATTR = 'data-event';
+
+  var OBSERVER_CONFIG = {
     attributes: true,
     childList: true,
     characterData: false,
@@ -29,10 +31,12 @@
   }
 
   function getData(node) {
-    return (text) => parse({
-      node: node,
-      text: text
-    });
+    return function (text) {
+      return parse({
+        node: node,
+        text: text
+      });
+    };
   }
 
   function placeElement(params) {
@@ -58,26 +62,20 @@
     var url = node.getAttribute(COMPONENT_ATTR);
     var getNodeData = getData(node);
 
-    fetch(url)
-      .then(getText)
-      .then(getNodeData)
-      .then(placeElement)
-      .then(dispatchEvent)
-      .catch(reportError);
+    fetch(url).then(getText).then(getNodeData).then(placeElement).then(dispatchEvent).catch(reportError);
   }
 
   function filterComponents(node) {
     return node.nodeType === 1 && node.getAttribute(COMPONENT_ATTR);
   }
 
-  var observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      [].slice.call(mutation.addedNodes)
-        .filter(filterComponents)
-        .forEach((node) => setTimeout(fetchComponent(node), 0));
+  var observer = new MutationObserver(function (mutations) {
+    mutations.forEach(function (mutation) {
+      [].slice.call(mutation.addedNodes).filter(filterComponents).forEach(function (node) {
+        return setTimeout(fetchComponent(node), 0);
+      });
     });
   });
 
   observer.observe(document.body, OBSERVER_CONFIG);
-
 })(document);
