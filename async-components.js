@@ -20,9 +20,9 @@
     var detail = params.node.getAttribute(DETAIL_ATTR);
     params.eventName = params.node.getAttribute(EVENT_ATTR);
     try {
-      params.eventDetail = JSON.parse(detail);
+      params.detail = JSON.parse(detail);
     } catch (e) {
-      params.eventDetail = detail;
+      params.detail = detail;
     }
 
     return Promise.resolve(params);
@@ -30,13 +30,12 @@
 
   function getData(node) {
     return (text) => parse({
-      node: node,
-      text: text
+      node, text
     });
   }
 
   function placeElement(params) {
-    params.node.outerHTML = params.text;
+    params.node.innerHTML = params.text;
     return Promise.resolve(params);
   }
 
@@ -44,14 +43,20 @@
     var e = new CustomEvent(params.eventName, {
       detail: {
         node: params.node,
-        detail: params.detail
+        data: params.detail
       }
     });
     document.dispatchEvent(e);
+    return Promise.resolve(params.node);
   }
 
   function reportError() {
     console.error("Error occured");
+  }
+
+  function fetchNestedComponents(node) {
+    var nestedNodes = node.querySelectorAll("[" + COMPONENT_ATTR + "]");
+    nodesToArray(nestedNodes).forEach(deferredNodeFetch);
   }
 
   function fetchComponent(node) {
@@ -63,6 +68,7 @@
       .then(getNodeData)
       .then(placeElement)
       .then(dispatchEvent)
+      .then(fetchNestedComponents)
       .catch(reportError);
   }
 
@@ -70,11 +76,23 @@
     return node.nodeType === 1 && node.getAttribute(COMPONENT_ATTR);
   }
 
+  function deferredNodeFetch(node) {
+    return setTimeout(fetchComponent(node), 0);
+  }
+
+  function nodesToArray(nodes) {
+    return [].slice.call(nodes);
+  }
+
+  function filterNodes(nodes) {
+    nodesToArray(nodes)
+      .filter(filterComponents)
+      .forEach(deferredNodeFetch);
+  }
+
   var observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      [].slice.call(mutation.addedNodes)
-        .filter(filterComponents)
-        .forEach((node) => setTimeout(fetchComponent(node), 0));
+    mutations.forEach(function (mutation) {
+      filterNodes(mutation.addedNodes);
     });
   });
 
