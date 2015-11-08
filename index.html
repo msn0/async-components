@@ -8,37 +8,12 @@
         crossorigin="anonymous">
 </head>
 <body>
-<script src="https://cdn.rawgit.com/msn0/async-components/1.0.1/dist/async-components.es5.min.js"></script>
+<script src="https://cdn.rawgit.com/msn0/async-components/2.0.0/dist/async-components.es5.min.js"></script>
 
 <div class="page-content container">
   <div data-component="header.html" data-event="header-loaded"></div>
-
-  <div class="row">
-    <div class="col-sm-6 col-md-4">
-      <div data-component="listing-item-1.html" data-event="listing-item-loaded"></div>
-    </div>
-
-    <div class="col-sm-6 col-md-4">
-      <div data-component="listing-item-2.html" data-event="listing-item-loaded"></div>
-    </div>
-
-    <div class="col-sm-6 col-md-4">
-      <div data-component="listing-item-3.html" data-event="listing-item-loaded"></div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-6 col-md-4">
-      <div data-component="events.html" data-event="local-events-loaded"></div>
-    </div>
-    <div class="col-sm-6 col-md-4">
-      <div data-component="summary.html" data-event="summary-loaded"></div>
-    </div>
-    <div class="col-sm-6 col-md-4">
-      <div data-component="users.html" data-event="users-loaded"></div>
-    </div>
-  </div>
-
+  <div data-component="listing.html" data-event="listing-loaded"></div>
+  <div data-component="footer.html" data-event="footer-loaded"></div>
 </div>
 </body>
 </html>
