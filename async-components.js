@@ -1,3 +1,5 @@
+'use strict';
+
 ((document) => {
 
   const COMPONENT_ATTR = 'data-component';
@@ -17,7 +19,7 @@
   }
 
   function parse(params) {
-    var detail = params.node.getAttribute(DETAIL_ATTR);
+    let detail = params.node.getAttribute(DETAIL_ATTR);
     params.eventName = params.node.getAttribute(EVENT_ATTR);
     try {
       params.detail = JSON.parse(detail);
@@ -29,9 +31,7 @@
   }
 
   function getData(node) {
-    return (text) => parse({
-      node, text
-    });
+    return (text) => parse({node, text});
   }
 
   function placeElement(params) {
@@ -40,7 +40,7 @@
   }
 
   function dispatchEvent(params) {
-    var e = new CustomEvent(params.eventName, {
+    let e = new CustomEvent(params.eventName, {
       detail: {
         node: params.node,
         data: params.detail
@@ -55,17 +55,16 @@
   }
 
   function fetchNestedComponents(node) {
-    var nestedNodes = node.querySelectorAll("[" + COMPONENT_ATTR + "]");
+    let nestedNodes = node.querySelectorAll("[" + COMPONENT_ATTR + "]");
     nodesToArray(nestedNodes).forEach(deferredNodeFetch);
   }
 
   function fetchComponent(node) {
-    var url = node.getAttribute(COMPONENT_ATTR);
-    var getNodeData = getData(node);
+    let url = node.getAttribute(COMPONENT_ATTR);
 
     fetch(url)
       .then(getText)
-      .then(getNodeData)
+      .then(getData(node))
       .then(placeElement)
       .then(dispatchEvent)
       .then(fetchNestedComponents)
@@ -90,8 +89,8 @@
       .forEach(deferredNodeFetch);
   }
 
-  var observer = new MutationObserver((mutations) => {
-    mutations.forEach(function (mutation) {
+  let observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
       filterNodes(mutation.addedNodes);
     });
   });

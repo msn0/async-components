@@ -32,9 +32,7 @@
 
   function getData(node) {
     return function (text) {
-      return parse({
-        node: node, text: text
-      });
+      return parse({ node: node, text: text });
     };
   }
 
@@ -50,6 +48,7 @@
         data: params.detail
       }
     });
+    console.log(params);
     document.dispatchEvent(e);
     return Promise.resolve(params.node);
   }
@@ -65,9 +64,8 @@
 
   function fetchComponent(node) {
     var url = node.getAttribute(COMPONENT_ATTR);
-    var getNodeData = getData(node);
 
-    fetch(url).then(getText).then(getNodeData).then(placeElement).then(dispatchEvent).then(fetchNestedComponents)['catch'](reportError);
+    fetch(url).then(getText).then(getData(node)).then(placeElement).then(dispatchEvent).then(fetchNestedComponents)['catch'](reportError);
   }
 
   function filterComponents(node) {
