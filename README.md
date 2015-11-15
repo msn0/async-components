@@ -4,7 +4,7 @@
 
 ## Usage 
 
-Include async-components stright after body opening tag:
+Include async-components straight after the `<body>` tag:
 ```html
 <script src="async-components.es5.min.js"></script>
 ```
