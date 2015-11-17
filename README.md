@@ -1,6 +1,18 @@
 # async-components
 
-> Async components for the web
+> Async components allows splitting the web into independent components and easily integrate them, asynchronously.
+
+## Demo
+
+[http://msn0.github.io/async-components](http://msn0.github.io/async-components/)
+
+## Installation
+
+```bash
+npm i async-components
+# or
+bower i async-components
+```
 
 ## Usage 
 
