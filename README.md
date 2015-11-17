@@ -21,9 +21,21 @@ Include async-components straight after the `<body>` tag:
 <script src="async-components.es5.min.js"></script>
 ```
 
-Load component:
+Define components:
 ```html
-<div data-component="/foobar.html" data-event="foobar-loaded"></div>
+<body>
+  <div data-component="/header.html" data-event="header-loaded"></div>
+  <div data-component="/listing.html" data-event="listing-loaded"></div>
+  <div data-component="/footer.html" data-event="footer-loaded"></div>
+</body>
+```
+
+Once component is loaded, the corresponding event is emmited. Let's say `listing` depends on `header`. Then `listing` should listen for `header-loaded` event, e.g.
+
+```js
+document.addEventListener('header-loaded', (data) => {
+  console.log(data);
+});
 ```
 
 ## License
