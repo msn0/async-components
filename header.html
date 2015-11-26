@@ -4,7 +4,16 @@
   <p>This page is built from components, asynchronously</p>
 
   <p>
-    <button class="btn btn-info btn-lg" href="" role="button">highlight components</button>
+    <button class="btn btn-info btn-lg" id="outline-button" role="button">outline components</button>
     <a class="btn btn-primary" href="https://github.com/msn0/async-components" role="button">Learn more</a>
   </p>
 </div>
+
+<script>
+  $(function () {
+    function outlineComponents() {
+      $("[data-component]").toggleClass("outline");
+    }
+    $(document).on("click", "#outline-button", outlineComponents);
+  });
+</script>
