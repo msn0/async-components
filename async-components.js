@@ -51,7 +51,6 @@
 
     });
 
-    //params.node.innerHTML = params.text;
     return Promise.resolve(params);
   }
 
