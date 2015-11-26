@@ -35,7 +35,23 @@
   }
 
   function placeElement(params) {
-    params.node.innerHTML = params.text;
+
+    var parser = new DOMParser();
+    var a = parser.parseFromString(params.text, "text/html");
+
+    [].slice.call(a.body.childNodes).forEach(function (e) {
+      var el;
+      if (e.nodeName === "SCRIPT") {
+        el = document.createElement('script');
+        el.appendChild(document.createTextNode(e.innerHTML));
+        params.node.appendChild(el);
+      } else {
+        params.node.appendChild(e);
+      }
+
+    });
+
+    //params.node.innerHTML = params.text;
     return Promise.resolve(params);
   }
 
