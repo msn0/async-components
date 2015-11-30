@@ -36,13 +36,12 @@
 
   function placeElement(params) {
 
-    var parser = new DOMParser();
-    var a = parser.parseFromString(params.text, "text/html");
+    let parser = new DOMParser();
+    let a = parser.parseFromString(params.text, "text/html");
 
-    [].slice.call(a.body.childNodes).forEach(function (e) {
-      var el;
+    [].slice.call(a.body.childNodes).forEach((e) => {
       if (e.nodeName === "SCRIPT") {
-        el = document.createElement('script');
+        let el = document.createElement('script');
         el.appendChild(document.createTextNode(e.innerHTML));
         params.node.appendChild(el);
       } else {
