@@ -33,9 +33,7 @@ Define components:
 Once component is loaded, the corresponding event is emmited. Let's say `listing` depends on `header`. Then `listing` should listen for `header-loaded` event, e.g.
 
 ```js
-document.addEventListener('header-loaded', (data) => {
-  console.log(data);
-});
+document.addEventListener('header-loaded', data => console.log(data));
 ```
 
 ## License
