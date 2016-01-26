@@ -1,6 +1,6 @@
 'use strict';
 
-((document) => {
+(document => {
 
   const COMPONENT_ATTR = 'data-component';
   const DETAIL_ATTR = 'data-detail';
@@ -31,21 +31,20 @@
   }
 
   function getData(node) {
-    return (text) => parse({node, text});
+    return text => parse({node, text});
   }
 
   function placeElement(params) {
+    const parser = new DOMParser();
+    let html = parser.parseFromString(params.text, "text/html");
 
-    let parser = new DOMParser();
-    let a = parser.parseFromString(params.text, "text/html");
-
-    [].slice.call(a.body.childNodes).forEach((e) => {
-      if (e.nodeName === "SCRIPT") {
+    [].slice.call(html.body.childNodes).forEach(node => {
+      if (node.nodeName === "SCRIPT") {
         let el = document.createElement('script');
-        el.appendChild(document.createTextNode(e.innerHTML));
+        el.appendChild(document.createTextNode(node.innerHTML));
         params.node.appendChild(el);
       } else {
-        params.node.appendChild(e);
+        params.node.appendChild(html);
       }
 
     });
@@ -69,12 +68,12 @@
   }
 
   function fetchNestedComponents(node) {
-    let nestedNodes = node.querySelectorAll("[" + COMPONENT_ATTR + "]");
+    const nestedNodes = node.querySelectorAll("[" + COMPONENT_ATTR + "]");
     nodesToArray(nestedNodes).forEach(deferredNodeFetch);
   }
 
   function fetchComponent(node) {
-    let url = node.getAttribute(COMPONENT_ATTR);
+    const url = node.getAttribute(COMPONENT_ATTR);
 
     fetch(url)
       .then(getText)
@@ -104,9 +103,7 @@
   }
 
   let observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      filterNodes(mutation.addedNodes);
-    });
+    mutations.forEach(mutation => filterNodes(mutation.addedNodes));
   });
 
   observer.observe(document.body, OBSERVER_CONFIG);
