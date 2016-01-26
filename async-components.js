@@ -102,7 +102,7 @@
       .forEach(deferredNodeFetch);
   }
 
-  let observer = new MutationObserver((mutations) => {
+  let observer = new MutationObserver(mutations => {
     mutations.forEach(mutation => filterNodes(mutation.addedNodes));
   });
 
